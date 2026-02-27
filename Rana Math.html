@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rana Math - এসো মজা নিয়ে গণিত শিখি</title>
+    
+    <!-- Premium Bengali Font: Hind Siliguri -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Modern Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans:['"Hind Siliguri"', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0F172A', 
+                        secondary: '#2563EB', 
+                        accent: '#F59E0B', 
+                        surface: '#F8FAFC', 
+                    },
+                    boxShadow: {
+                        'premium': '0 20px 40px -10px rgba(0,0,0,0.05)',
+                        'hover': '0 30px 60px -15px rgba(0,0,0,0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Smooth Scrolling */
+        html { scroll-behavior: smooth; overflow-x: hidden;}
+        
+        /* Light 3-5% Gradient Background applied globally */
+        body {
+            background: linear-gradient(135deg, rgba(255, 205, 51, 0.05) 0%, rgba(248, 250, 252, 1) 50%, rgba(37, 99, 235, 0.03) 100%);
+        }
+
+        /* Hidden Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+        
+        /* Soft Glassmorphism */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        /* Next-Gen Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            50% { transform: translateY(-15px) rotate(3deg) scale(1.02); }
+        }
+        .animate-float {
+            animation: float 7s ease-in-out infinite;
+        }
+        .animate-float-delayed {
+            animation: float 9s ease-in-out infinite alternate;
+        }
+
+        /* Smooth UI Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        /* Custom UI fixes */
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        .typing-cursor { display: inline-block; width: 4px; height: 1em; background-color: #2563EB; vertical-align: middle; animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+<body class="text-gray-800 antialiased min-h-screen">
+
+    <!-- Premium Glassmorphism Navbar -->
+    <nav class="fixed w-full top-0 z-50 glass-nav shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Clickable Logo -->
+                <div class="flex items-center cursor-pointer hover:scale-105 transition-transform" onclick="window.scrollTo(0,0)">
+                    <img src="https://lh3.googleusercontent.com/d/1YFKDO4jpMYretpDRXSV1qQpYweK1KP0H" alt="Rana Math Logo" class="h-10 sm:h-12 w-auto object-contain">
+                </div>
+                
+                <div class="flex items-center gap-4 md:gap-5">
+                    <a href="tel:+8801521442665" class="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-gray-200 text-gray-600 hover:text-secondary hover:border-secondary hover:shadow-md transition-all duration-300" title="Call Us">
+                        <i class="fas fa-phone-alt text-lg"></i>
+                    </a>
+                    <a href="https://www.facebook.com/share/1Y9ycd86vJ/" target="_blank" class="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-gray-200 text-gray-600 hover:text-[#1877F2] hover:border-[#1877F2] hover:shadow-md transition-all duration-300" title="Facebook Page">
+                        <i class="fab fa-facebook-f text-lg"></i>
+                    </a>
+                    <button onclick="openModal()" class="hidden md:flex items-center gap-2 bg-gray-900 text-white px-7 py-2.5 rounded-full font-bold shadow-lg hover:bg-secondary hover:-translate-y-1 transition-all duration-300">
+                        ভর্তি হতে চাই <i class="fas fa-arrow-right text-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Admission Button -->
+    <div class="md:hidden fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40 w-[90%]">
+        <button onclick="openModal()" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold shadow-2xl flex justify-center items-center gap-2 text-lg border border-gray-700 hover:bg-secondary transition-colors">
+            <i class="fas fa-user-graduate"></i> ভর্তি হতে চাই
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="pt-40 pb-20 px-4 relative overflow-hidden">
+        <div class="absolute top-[-5%] left-[5%] w-96 h-96 bg-[#FFCD33]/20 rounded-full blur-3xl animate-float z-0"></div>
+        <div class="absolute top-[10%] right-[5%] w-[400px] h-[400px] bg-blue-200/40 rounded-full blur-3xl animate-float-delayed z-0"></div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10 space-y-8 mt-4">
+            <span class="inline-flex items-center gap-2 py-1.5 px-5 rounded-full bg-white/80 backdrop-blur-md shadow-sm border border-gray-100 text-gray-700 font-bold text-sm reveal">
+                <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span> রাজশাহীর প্রিমিয়াম গণিত একাডেমি
+            </span>
+            
+            <h2 class="text-5xl md:text-7xl font-extrabold leading-[1.3] tracking-tight min-h-[140px] md:min-h-[180px]">
+                <span id="type-line1" class="text-gray-900"></span><br>
+                <span id="type-line2" class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-indigo-600"></span><span id="cursor" class="typing-cursor ml-1"></span>
+            </h2>
+
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed font-medium reveal" style="transition-delay: 0.3s;">
+                ষষ্ঠ থেকে দশম শ্রেণির শিক্ষার্থীদের জন্য সম্পূর্ণ আধুনিক, প্রফেশনাল ও প্রিমিয়াম শিক্ষাব্যবস্থা। আজই তোমার ক্লাস বেছে নিয়ে যুক্ত হও আমাদের সাথে।
+            </p>
+            <div class="pt-8 reveal" style="transition-delay: 0.4s;">
+                <a href="#classes" class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white shadow-lg border border-gray-100 text-secondary hover:bg-gray-900 hover:text-white hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                    <i class="fas fa-arrow-down text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Classes Section -->
+    <section id="classes" class="py-20 px-4 max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-16 reveal">
+            <h3 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">আমাদের কোর্স সমূহ</h3>
+            <p class="text-gray-500 text-lg font-medium">Class 6 থেকে Class 10 পর্যন্ত</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="class-container">
+            <!-- JS Will populate Minimal Premium cards here -->
+        </div>
+    </section>
+
+    <!-- Result Portal -->
+    <section class="py-20 px-4 bg-white/50 backdrop-blur-sm border-y border-gray-100 relative overflow-hidden">
+        <div class="max-w-5xl mx-auto reveal">
+            <div class="bg-white rounded-[2.5rem] p-10 md:p-14 shadow-premium border border-gray-100 flex flex-col md:flex-row items-center gap-12 relative overflow-hidden">
+                <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-blue-100/50 rounded-full blur-3xl"></div>
+                
+                <div class="flex-1 text-center md:text-left relative z-10">
+                    <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-[1.5rem] shadow-lg flex items-center justify-center text-white text-3xl mb-8 mx-auto md:mx-0">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">Result Portal</h3>
+                    <p class="text-gray-600 text-lg leading-relaxed font-medium">তোমার মাসিক পরীক্ষার ফলাফল এবং প্রোগ্রেস খুব সহজেই অনলাইন থেকে চেক করো।</p>
+                </div>
+                
+                <div class="flex-1 w-full bg-surface p-8 rounded-[2rem] shadow-inner border border-gray-100 relative z-10">
+                    <form onsubmit="checkResult(event)" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">স্টুডেন্ট আইডি / রোল</label>
+                            <input type="text" required class="w-full px-5 py-4 rounded-2xl bg-white border border-gray-200 focus:bg-white focus:border-secondary focus:ring-4 focus:ring-blue-100 outline-none transition-all text-gray-800 font-bold" placeholder="যেমন: RM-1025">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">মাস নির্বাচন করো</label>
+                            <div class="relative">
+                                <select required class="w-full px-5 py-4 rounded-2xl bg-white border border-gray-200 focus:bg-white focus:border-secondary focus:ring-4 focus:ring-blue-100 outline-none appearance-none transition-all text-gray-800 font-bold cursor-pointer">
+                                    <option value="" disabled selected>মাস নির্বাচন করুন</option>
+                                    <option>জানুয়ারি</option>
+                                    <option>ফেব্রুয়ারি</option>
+                                    <option>মার্চ</option>
+                                </select>
+                                <i class="fas fa-chevron-down absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-gray-900 hover:bg-secondary text-white font-bold text-lg rounded-2xl shadow-lg hover:shadow-xl transition-all flex justify-center items-center gap-2">
+                            ফলাফল দেখুন <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="py-24 px-4 max-w-7xl mx-auto">
+        <div class="text-center mb-16 reveal">
+            <h3 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">শিক্ষার্থী ও অভিভাবকদের মতামত</h3>
+            <p class="text-gray-500 text-lg font-medium">রানা ম্যাথ সম্পর্কে তারা কী ভাবছেন</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-[2rem] shadow-premium border border-gray-100 relative hover:-translate-y-3 hover:shadow-2xl transition-all duration-500 reveal">
+                <i class="fas fa-quote-right text-4xl text-gray-100 absolute top-8 right-8"></i>
+                <div class="flex text-accent text-sm mb-6 gap-1">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-600 text-lg leading-relaxed font-medium mb-8">"রানা স্যারের পড়ানোর স্টাইল অসাধারণ। আমি আগে ম্যাথ ভয় পেতাম, এখন ম্যাথ আমার সবচেয়ে প্রিয় সাবজেক্ট!"</p>
+                <div class="flex items-center gap-4 border-t border-gray-50 pt-6">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-md">ফ</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900">ফাহিম</h4>
+                        <p class="text-sm text-gray-500 font-medium">Class 9 Student</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-[2rem] shadow-premium border border-gray-100 relative hover:-translate-y-3 hover:shadow-2xl transition-all duration-500 reveal" style="transition-delay: 0.1s;">
+                <i class="fas fa-quote-right text-4xl text-gray-100 absolute top-8 right-8"></i>
+                <div class="flex text-accent text-sm mb-6 gap-1">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-600 text-lg leading-relaxed font-medium mb-8">"ব্যাচ টাইম চয়েস করা এবং লেকচার শিট অনলাইনে পাওয়ার সুবিধাটি সত্যিই প্রিমিয়াম একটি ব্যবস্থা। প্রশংসনীয়।"</p>
+                <div class="flex items-center gap-4 border-t border-gray-50 pt-6">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-md">র</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900">রাফিয়াতের বাবা</h4>
+                        <p class="text-sm text-gray-500 font-medium">Guardian</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-[2rem] shadow-premium border border-gray-100 relative hover:-translate-y-3 hover:shadow-2xl transition-all duration-500 reveal" style="transition-delay: 0.2s;">
+                <i class="fas fa-quote-right text-4xl text-gray-100 absolute top-8 right-8"></i>
+                <div class="flex text-accent text-sm mb-6 gap-1">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-600 text-lg leading-relaxed font-medium mb-8">"মান্থলি রেজাল্ট পোর্টাল থাকায় আমার প্রোগ্রেস আমি নিজেই বুঝতে পারি। রানা ম্যাথ বেস্ট!"</p>
+                <div class="flex items-center gap-4 border-t border-gray-50 pt-6">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white font-bold text-xl shadow-md">সু</div>
+                    <div>
+                        <h4 class="font-bold text-gray-900">সুমাইয়া</h4>
+                        <p class="text-sm text-gray-500 font-medium">Class 10 Student</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Minimal FAQ Section -->
+    <section class="py-20 px-4 border-t border-gray-200 relative">
+        <div class="max-w-3xl mx-auto reveal relative z-10">
+            <h3 class="text-4xl font-extrabold text-center mb-12 text-gray-900 tracking-tight">সাধারণ জিজ্ঞাসা (FAQ)</h3>
+            <div class="space-y-4">
+                <details class="group bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer p-6 text-lg text-gray-800 hover:text-secondary transition-colors">
+                        <span>কীভাবে ব্যাচে ভর্তি হবো?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 text-gray-400 group-open:text-secondary"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-gray-600 px-6 pb-6 leading-relaxed font-medium animate-fade-in">
+                        উপরে দেওয়া 'ভর্তি হতে চাই' বাটনে ক্লিক করে ফর্ম পূরণ করতে পারো অথবা নির্দিষ্ট ক্লাসের সেকশন থেকে WhatsApp-এ মেসেজ দিয়ে ভর্তি নিশ্চিত করতে পারবে।
+                    </div>
+                </details>
+                <details class="group bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer p-6 text-lg text-gray-800 hover:text-secondary transition-colors">
+                        <span>লেকচার শিটগুলো কীভাবে পাবো?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 text-gray-400 group-open:text-secondary"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-gray-600 px-6 pb-6 leading-relaxed font-medium animate-fade-in">
+                        প্রতিটি ক্লাসের সেকশনে 'Resources & Drive' অপশন দেওয়া আছে। সেখানে ক্লিক করে নির্দিষ্ট ইউনিটের শিট সরাসরি Google Drive থেকে দেখতে ও ডাউনলোড করতে পারবে।
+                    </div>
+                </details>
+                <details class="group bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer p-6 text-lg text-gray-800 hover:text-secondary transition-colors">
+                        <span>রানা ম্যাথ এর লোকেশন কোথায়?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 text-gray-400 group-open:text-secondary"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-gray-600 px-6 pb-6 leading-relaxed font-medium animate-fade-in">
+                        আমাদের মূল প্রতিষ্ঠান সাহেব বাজার, জিরো পয়েন্ট, রাজশাহী তে অবস্থিত। ম্যাপ দেখে ডিরেকশন নিতে পারো।
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer with Map -->
+    <footer class="bg-white border-t border-gray-200 pt-20 pb-10 px-4 md:pb-10 pb-32"> 
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-16 reveal">
+            <!-- Brand -->
+            <div class="space-y-6">
+                <div>
+                    <img src="https://lh3.googleusercontent.com/d/1YFKDO4jpMYretpDRXSV1qQpYweK1KP0H" alt="Rana Math Logo" class="h-12 w-auto object-contain mb-2">
+                </div>
+                <p class="text-gray-600 text-lg leading-relaxed font-medium">এসো মজা নিয়ে গণিত শিখি। রাজশাহীর অন্যতম সেরা গণিত শিক্ষা প্রতিষ্ঠান, যেখানে পড়াশোনা মানেই আনন্দ।</p>
+                <div class="flex space-x-4">
+                    <a href="https://www.facebook.com/share/1Y9ycd86vJ/" target="_blank" class="w-12 h-12 rounded-full bg-surface border border-gray-200 flex items-center justify-center text-gray-600 hover:text-white hover:bg-[#1877F2] hover:border-[#1877F2] transition-all shadow-sm">
+                        <i class="fab fa-facebook-f text-xl"></i>
+                    </a>
+                    <a href="https://wa.me/8801521442665" target="_blank" class="w-12 h-12 rounded-full bg-surface border border-gray-200 flex items-center justify-center text-gray-600 hover:text-white hover:bg-[#25D366] hover:border-[#25D366] transition-all shadow-sm">
+                        <i class="fab fa-whatsapp text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Contact -->
+            <div>
+                <h3 class="font-bold text-2xl text-gray-900 mb-6">যোগাযোগের ঠিকানা</h3>
+                <ul class="space-y-4 text-gray-700 text-lg">
+                    <li class="flex items-start gap-4 p-4 rounded-2xl bg-surface border border-gray-100 hover:shadow-md transition-shadow">
+                        <i class="fas fa-map-marker-alt mt-1 text-secondary text-xl"></i> 
+                        <span class="font-bold">সাহেব বাজার, জিরো পয়েন্ট<br>রাজশাহী, বাংলাদেশ</span>
+                    </li>
+                    <li class="flex items-center gap-4 p-4 rounded-2xl bg-surface border border-gray-100 hover:shadow-md transition-shadow">
+                        <i class="fas fa-phone-alt text-secondary text-xl"></i> 
+                        <span class="font-bold">+880 1521-442665</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Google Map -->
+            <div class="h-64 w-full rounded-[2rem] overflow-hidden shadow-premium border border-gray-200 relative group">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d116130.64058206411!2d88.52528761184206!3d24.38006090715915!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39fbefd0a55ea957%3A0x2f9cac3357d62617!2sRajshahi!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                
+                <div class="absolute inset-0 bg-gray-900/40 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <a href="https://share.google/40JrcU3pCvxWxumSQ" target="_blank" class="bg-white text-gray-900 font-bold px-7 py-3.5 rounded-full shadow-lg hover:scale-105 hover:bg-secondary hover:text-white transition-all flex items-center gap-2">
+                        <i class="fas fa-map-marked-alt"></i> ম্যাপে ডিরেকশন পান
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-gray-500 pt-8 border-t border-gray-100 font-bold">
+            &copy; 2026 Rana Math. Designed for Next-Gen Learning.
+        </div>
+    </footer>
+
+    <!-- Admission Modal -->
+    <div id="admissionModal" class="fixed inset-0 z-50 hidden bg-gray-900/60 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl overflow-hidden relative animate-fade-in">
+            <button onclick="closeModal()" class="absolute top-5 right-5 w-10 h-10 bg-white hover:bg-gray-100 text-gray-700 hover:text-red-500 rounded-full flex items-center justify-center transition-colors z-10 shadow-sm">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            
+            <div class="bg-gray-900 p-8 text-center text-white relative">
+                <h2 class="text-3xl font-extrabold mb-2">ভর্তি ফরম</h2>
+                <p class="text-gray-300 text-sm font-bold">সাবমিট করলে সরাসরি WhatsApp-এ মেসেজ যাবে</p>
+            </div>
+
+            <form onsubmit="submitAdmission(event)" class="p-8 space-y-5">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">শিক্ষার্থীর নাম</label>
+                    <input type="text" id="ad-name" required class="w-full px-5 py-3.5 rounded-2xl bg-surface border border-gray-200 focus:bg-white focus:border-secondary focus:ring-4 focus:ring-blue-50 outline-none transition-all font-bold text-gray-800" placeholder="যেমন: মো: ফাহিম">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">শ্রেণি (Class)</label>
+                    <div class="relative">
+                        <select id="ad-class" required class="w-full px-5 py-3.5 rounded-2xl bg-surface border border-gray-200 focus:bg-white focus:border-secondary focus:ring-4 focus:ring-blue-50 outline-none appearance-none transition-all font-bold text-gray-800 cursor-pointer">
+                            <option value="" disabled selected>শ্রেণি নির্বাচন করো</option>
+                            <option value="Class 6">Class 6</option>
+                            <option value="Class 7">Class 7</option>
+                            <option value="Class 8">Class 8</option>
+                            <option value="Class 9">Class 9</option>
+                            <option value="Class 10">Class 10</option>
+                        </select>
+                        <i class="fas fa-chevron-down absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">স্কুলের নাম</label>
+                    <input type="text" id="ad-school" required class="w-full px-5 py-3.5 rounded-2xl bg-surface border border-gray-200 focus:bg-white focus:border-secondary focus:ring-4 focus:ring-blue-50 outline-none transition-all font-bold text-gray-800" placeholder="স্কুলের নাম লিখো">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">মোবাইল নাম্বার</label>
+                    <input type="tel" id="ad-phone" required class="w-full px-5 py-3.5 rounded-2xl bg-surface border border-gray-200 focus:bg-white focus:border-secondary focus:ring-4 focus:ring-blue-50 outline-none transition-all font-bold text-gray-800" placeholder="01XXX-XXXXXX">
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-[#25D366] hover:bg-[#1DA851] text-white font-extrabold text-lg rounded-2xl shadow-lg hover:shadow-xl transition-all mt-6 flex justify-center items-center gap-2">
+                    WhatsApp-এ সাবমিট করুন <i class="fab fa-whatsapp text-2xl"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // =========================================================
+        // 🔹 CLASS DATA: এখান থেকে খুব সহজেই প্রতিটি ক্লাসের ডাটা আপডেট করুন
+        // =========================================================
+        
+        const classesData =[
+            // ---------- CLASS 6 ----------
+            { 
+                id: 6, 
+                name: "Class 6", 
+                bnName: "ষষ্ঠ শ্রেণি", 
+                themeColor: "text-blue-500", 
+                bgSoft: "bg-blue-50", 
+                borderGlow: "hover:border-blue-300 hover:shadow-blue-500/10",
+                icon: "fa-cube",
+                // ক্লাস ৬ এর রুটিনের ছবি
+                routineImg: "https://lh3.googleusercontent.com/d/13iQs0va0vcaiPSIF3BKFFCoKMig6DEnT", 
+                // ক্লাস ৬ এর ফেসবুক গ্রুপ
+                fbLink: "https://www.facebook.com/groups/class6ranamath/",
+                // ক্লাস ৬ এর অধ্যায় সমূহ (আপনি চাইলে আরও বাড়াতে বা কমাতে পারেন)
+                resources:[
+                    { title: "অধ্যায় ১: সংখ্যার গল্প", link: "https://drive.google.com/file/d/link_here/view" },
+                    { title: "অধ্যায় ২: পূর্ণসংখ্যার জগৎ", link: "https://drive.google.com/file/d/link_here/view" },
+                    { title: "অধ্যায় ৩: মৌলিক উৎপাদকের গাছ", link: "https://drive.google.com/file/d/link_here/view" }
+                ]
+            },
+            
+            // ---------- CLASS 7 ----------
+            { 
+                id: 7, 
+                name: "Class 7", 
+                bnName: "সপ্তম শ্রেণি", 
+                themeColor: "text-purple-500", 
+                bgSoft: "bg-purple-50", 
+                borderGlow: "hover:border-purple-300 hover:shadow-purple-500/10",
+                icon: "fa-layer-group",
+                // ক্লাস ৭ এর রুটিনের ছবি
+                routineImg: "https://lh3.googleusercontent.com/d/13iQs0va0vcaiPSIF3BKFFCoKMig6DEnT",
+                // ক্লাস ৭ এর ফেসবুক গ্রুপ
+                fbLink: "https://www.facebook.com/groups/class7ranamath/",
+                // ক্লাস ৭ এর অধ্যায় সমূহ
+                resources:[
+                    { title: "Unit 1: সূচকের গল্প", link: "https://drive.google.com/file/d/link_here/view" },
+                    { title: "Unit 2: অজানা রাশির সূচক", link: "https://drive.google.com/file/d/link_here/view" },
+                    { title: "Unit 3: ভগ্নাংশের লসাগু ও গসাগু", link: "https://drive.google.com/file/d/link_here/view" },
+                    { title: "Unit 4: অনুপাত ও সমানুপাত", link: "https://drive.google.com/file/d/link_here/view" }
+                ]
+            },
+
+            // ---------- CLASS 8 ----------
+            { 
+                id: 8, 
+                name: "Class 8", 
+                bnName: "অষ্টম শ্রেণি", 
+                themeColor: "text-cyan-500", 
+                bgSoft: "bg-cyan-50", 
+                borderGlow: "hover:border-cyan-300 hover:shadow-cyan-500/10",
+                icon: "fa-shapes",
+                // ক্লাস ৮ এর রুটিনের ছবি
+                routineImg: "https://lh3.googleusercontent.com/d/13iQs0va0vcaiPSIF3BKFFCoKMig6DEnT",
+                // ক্লাস ৮ এর ফেসবুক গ্রুপ
+                fbLink: "https://www.facebook.com/groups/class8ranamath/",
+                // ক্লাস ৮ এর অধ্যায় সমূহ
+                resources:[
+                    { title: "১ম অধ্যায়: গাণিতিক অনুসন্ধান", link: "https://drive.google.com/file/d/link_here/view" },
+                    { title: "২য় অধ্যায়: দৈনন্দিন কাজে বাস্তব সংখ্যা", link: "https://drive.google.com/file/d/link_here/view" }
+                ]
+            },
+
+            // ---------- CLASS 9 ----------
+            { 
+                id: 9, 
+                name: "Class 9", 
+                bnName: "নবম শ্রেণি", 
+                themeColor: "text-amber-500", 
+                bgSoft: "bg-amber-50", 
+                borderGlow: "hover:border-amber-300 hover:shadow-amber-500/10",
+                icon: "fa-chart-pie",
+                // ক্লাস ৯ এর রুটিনের ছবি
+                routineImg: "https://lh3.googleusercontent.com/d/13iQs0va0vcaiPSIF3BKFFCoKMig6DEnT",
+                // ক্লাস ৯ এর ফেসবুক গ্রুপ
+                fbLink: "https://www.facebook.com/groups/class9ranamath/",
+                // ক্লাস ৯ এর অধ্যায় সমূহ
+                resources:[
+                    { title: "Unit 1: প্রাত্যহিক জীবনে সেট", link: "https://drive.google.com/file/d/link_here/view" },
+                    { title: "Unit 2: অনুক্রম ও ধারা", link: "https://drive.google.com/file/d/link_here/view" },
+                    { title: "Unit 3: লগারিদমের ধারণা", link: "https://drive.google.com/file/d/link_here/view" }
+                ]
+            },
+
+            // ---------- CLASS 10 ----------
+            { 
+                id: 10, 
+                name: "Class 10", 
+                bnName: "দশম শ্রেণি", 
+                themeColor: "text-emerald-500", 
+                bgSoft: "bg-emerald-50", 
+                borderGlow: "hover:border-emerald-300 hover:shadow-emerald-500/10",
+                icon: "fa-graduation-cap",
+                // ক্লাস ১০ এর রুটিনের ছবি
+                routineImg: "https://lh3.googleusercontent.com/d/13iQs0va0vcaiPSIF3BKFFCoKMig6DEnT",
+                // ক্লাস ১০ এর ফেসবুক গ্রুপ
+                fbLink: "https://www.facebook.com/groups/class10ranamath/",
+                // ক্লাস ১০ এর অধ্যায় সমূহ
+                resources:[
+                    { title: "অধ্যায় ১: বাস্তব সংখ্যা", link: "https://drive.google.com/file/d/link_here/view" },
+                    { title: "অধ্যায় ২: সেট ও ফাংশন", link: "https://drive.google.com/file/d/link_here/view" },
+                    { title: "অধ্যায় ৩: বীজগণিতীয় রাশি", link: "https://drive.google.com/file/d/link_here/view" },
+                    { title: "অধ্যায় ৪: সূচক ও লগারিদম", link: "https://drive.google.com/file/d/link_here/view" },
+                    { title: "অধ্যায় ৫: সমীকরণ", link: "https://drive.google.com/file/d/link_here/view" }
+                ]
+            }
+        ];
+
+        // =========================================================
+        // 🔹 CARD GENERATION LOGIC (এখানে হাত দেওয়ার প্রয়োজন নেই)
+        // =========================================================
+
+        const container = document.getElementById('class-container');
+        const callNumber = "+8801521442665";
+
+        classesData.forEach((cls, index) => {
+            const card = document.createElement('div');
+            card.className = `reveal bg-white rounded-[2.5rem] p-8 shadow-premium border border-gray-100 ${cls.borderGlow} hover:-translate-y-2 transition-all duration-500 relative flex flex-col items-center`;
+            card.style.transitionDelay = `${index * 0.1}s`; 
+            
+            // Dynamic Resources List Generate করা হচ্ছে
+            let resourcesHTML = '';
+            cls.resources.forEach(res => {
+                resourcesHTML += `
+                    <a href="${res.link}" target="_blank" class="flex items-center gap-3 px-4 py-3 hover:bg-surface rounded-xl text-sm font-extrabold text-gray-700 hover:text-secondary transition-all">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" class="w-5 h-5"> ${res.title}
+                    </a>
+                `;
+            });
+
+            card.innerHTML = `
+                <div class="w-20 h-20 rounded-full ${cls.bgSoft} ${cls.themeColor} flex items-center justify-center text-3xl mb-4 shadow-sm">
+                    <i class="fas ${cls.icon}"></i>
+                </div>
+                <h4 class="text-3xl font-extrabold text-gray-900 tracking-tight text-center">${cls.name}</h4>
+                <p class="text-gray-500 font-bold mt-1 text-md text-center mb-8">${cls.bnName}</p>
+                
+                <div class="space-y-3 w-full relative z-10">
+                    
+                    <!-- Batch Routine Toggle -->
+                    <button onclick="toggleSection('batch-${cls.id}', this)" class="w-full p-4 bg-surface border border-gray-200 text-gray-800 font-bold rounded-2xl hover:bg-gray-50 hover:border-gray-300 transition-all flex justify-between items-center group/btn shadow-sm">
+                        <span class="flex items-center gap-3"><i class="fas fa-calendar-check ${cls.themeColor}"></i> Batch Time / রুটিন</span>
+                        <i class="fas fa-chevron-down text-gray-400 group-hover/btn:text-gray-800 transition-all duration-300 toggle-icon"></i>
+                    </button>
+                    
+                    <div id="batch-${cls.id}" class="hidden bg-white border border-gray-100 rounded-2xl p-4 shadow-md animate-fade-in mt-2">
+                        <div class="w-full aspect-square bg-gray-50 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden border border-gray-200">
+                            <img src="${cls.routineImg}" alt="${cls.name} Routine" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="tel:${callNumber}" class="flex-1 bg-gray-900 hover:bg-black text-white text-center py-3 rounded-xl text-sm font-extrabold transition-all shadow-md"><i class="fas fa-phone-alt mr-1"></i> Call</a>
+                            <a href="https://wa.me/8801521442665?text=I want to admit in ${cls.name}" target="_blank" class="flex-1 bg-[#25D366] hover:bg-[#1DA851] text-white text-center py-3 rounded-xl text-sm font-extrabold transition-all shadow-md"><i class="fab fa-whatsapp text-lg mr-1"></i> WP</a>
+                        </div>
+                    </div>
+
+                    <!-- Resources Toggle -->
+                    <button onclick="toggleSection('sheets-${cls.id}', this)" class="w-full p-4 bg-surface border border-gray-200 text-gray-800 font-bold rounded-2xl hover:bg-gray-50 hover:border-gray-300 transition-all flex justify-between items-center group/btn shadow-sm">
+                        <span class="flex items-center gap-3"><i class="fas fa-folder ${cls.themeColor}"></i> Resources & Drive</span>
+                        <i class="fas fa-chevron-down text-gray-400 group-hover/btn:text-gray-800 transition-all duration-300 toggle-icon"></i>
+                    </button>
+
+                    <!-- Dynamically Generated Resources for this specific class -->
+                    <div id="sheets-${cls.id}" class="hidden bg-white border border-gray-100 rounded-2xl p-3 shadow-md animate-fade-in mt-2">
+                        <div class="space-y-1">
+                            ${resourcesHTML}
+                        </div>
+                    </div>
+
+                    <!-- FB Group Link for this specific class -->
+                    <a href="${cls.fbLink}" target="_blank" class="w-full p-4 bg-blue-50/50 border border-blue-100 text-[#1877F2] font-bold rounded-2xl hover:bg-blue-100 hover:shadow-sm transition-all duration-300 flex justify-between items-center block group/fb mt-3">
+                        <span class="flex items-center gap-3"><i class="fab fa-facebook text-xl group-hover/fb:scale-110 transition-transform"></i> FB Group Link</span>
+                        <i class="fas fa-external-link-alt text-sm"></i>
+                    </a>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        // Toggle Expandable Sections
+        function toggleSection(id, btnElement) {
+            const el = document.getElementById(id);
+            const parent = el.closest('.space-y-3');
+            
+            const allHidden = parent.querySelectorAll('div[id^="batch-"], div[id^="sheets-"]');
+            const allIcons = parent.querySelectorAll('.toggle-icon');
+            
+            let wasHidden = el.classList.contains('hidden');
+
+            allHidden.forEach(div => div.classList.add('hidden'));
+            allIcons.forEach(icon => icon.classList.remove('rotate-180', 'text-gray-800'));
+
+            if (wasHidden) {
+                el.classList.remove('hidden');
+                const icon = btnElement.querySelector('.toggle-icon');
+                icon.classList.add('rotate-180', 'text-gray-800');
+            }
+        }
+
+        // --- Typing Animation Script ---
+        const text1 = Array.from("এসো মজা নিয়ে ");
+        const text2 = Array.from("গণিত শিখি!");
+        let t1Index = 0;
+        let t2Index = 0;
+        const line1 = document.getElementById('type-line1');
+        const line2 = document.getElementById('type-line2');
+
+        function typeLine1() {
+            if(t1Index < text1.length) {
+                line1.innerHTML += text1[t1Index];
+                t1Index++;
+                setTimeout(typeLine1, 70);
+            } else {
+                setTimeout(typeLine2, 300);
+            }
+        }
+
+        function typeLine2() {
+            if(t2Index < text2.length) {
+                line2.innerHTML += text2[t2Index];
+                t2Index++;
+                setTimeout(typeLine2, 70);
+            }
+        }
+        
+        window.addEventListener('load', () => {
+            setTimeout(typeLine1, 500);
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // --- Admission Modal Logic ---
+        const modal = document.getElementById('admissionModal');
+
+        function openModal() {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto'; 
+        }
+
+        modal.addEventListener('click', function(e) {
+            if(e.target === modal) closeModal();
+        });
+
+        function submitAdmission(e) {
+            e.preventDefault();
+            const name = document.getElementById('ad-name').value;
+            const cls = document.getElementById('ad-class').value;
+            const school = document.getElementById('ad-school').value;
+            const phone = document.getElementById('ad-phone').value;
+            const message = `আসসালামু আলাইকুম, আমি রানা ম্যাথ-এ ভর্তি হতে চাই।\n\nনাম: ${name}\nশ্রেণি: ${cls}\nস্কুল: ${school}\nমোবাইল: ${phone}`;
+            const whatsappUrl = `https://wa.me/8801521442665?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            closeModal();
+            e.target.reset();
+        }
+
+        function checkResult(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> খোঁজা হচ্ছে...';
+            setTimeout(() => {
+                alert("ফলাফল পাওয়া গেছে! (এটি একটি ডেমো পোর্টাল)");
+                btn.innerHTML = originalText;
+                e.target.reset();
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
